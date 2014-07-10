@@ -13,6 +13,7 @@
 #define BRILLO 8
 
 #define GRISES 24
+#define TONOSRGB 6
 
 // http://man7.org/linux/man-pages/man4/console_codes.4.html
 void borrar_pantalla() {
@@ -32,13 +33,20 @@ void color_fondo(int col) {
 }
 
 int rva(double rojo, double verde, double azul) {
-	return 1;
+    int r = (int)(rojo * (TONOSRGB));
+    if(r >= TONOSRGB) r = TONOSRGB-1;
+    int g = (int)(verde * (TONOSRGB));
+    if(g >= TONOSRGB) g = TONOSRGB-1;
+    int b = (int)(azul * (TONOSRGB));
+    if(b >= TONOSRGB) b = TONOSRGB-1;
+	return 16 + b + g * TONOSRGB + r * TONOSRGB * TONOSRGB ;
 }
 int gris(double tono) {
 	int col = (int) (tono * (GRISES+2));
+    printf("%d",col);
 	if(col == 0) {
 		return 0;
-	} else if(col == GRISES+1) {
+	} else if(col >= GRISES+1) {
 		return 255-GRISES;
 	} else {
 		return (col) + (255-GRISES);
