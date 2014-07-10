@@ -26,22 +26,24 @@ void dibuja_bmp(int posF, int posC, char *desc) {
 
 void main() {
 	dibuja_bmp(1,1,
-		"   VVVVV\n"
-		"  VVVVVVVVVV\n"
-		"  RRRMMRM\n"
-		" RMRMMMRMMM\n"
-		" RMRRMMMRMMM\n"
-		" RRMMMMRRRR\n"
-		"   MMMMMMM\n"
-		"  RRVRRR\n"
-		" RRRVRRVRRR\n"
-		"RRRRVVVVRRRR\n"
-		"MMRVMVVMVRMM\n"
-		"MMMVVVVVVMMM\n"
-		"MMVVVVVVVVMM\n"
-		"  VVV  VVV\n"
-		" RRR    RRR\n"
-		"RRRR    RRRR\n");
+		"              \n"
+		"    VVVVV     \n"
+		"   VVVVVVVVVV \n"
+		"   RRRMMRM    \n"
+		"  RMRMMMRMMM  \n"
+		"  RMRRMMMRMMM \n"
+		"  RRMMMMRRRR  \n"
+		"    MMMMMMM   \n"
+		"   RRVRRR     \n"
+		"  RRRVRRVRRR  \n"
+		" RRRRVVVVRRRR \n"
+		" MMRVMVVMVRMM \n"
+		" MMMVVVVVVMMM \n"
+		" MMVVVVVVVVMM \n"
+		"   VVV  VVV   \n"
+		"  RRR    RRR  \n"
+		" RRRR    RRRR \n"
+		"              ");
 	printf("\n\n\n");
 	
 }
