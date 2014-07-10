@@ -8,7 +8,7 @@ void main() {
 	columnas = max_columnas();
 	printf("Pulsa INTRO 10 veces");
 	f = filas/2; c = columnas/2;
-	for(int i = 1 ; i <= 10 ; i++) {
+	for(i = 1 ; i <= 10 ; i++) {
 		scanf("%*c");
 		posicion(f,c);
 		printf("%d",i);
