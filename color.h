@@ -10,8 +10,9 @@
 #define CIAN 6
 #define BLANCO 7
 
-#define FG_INDEX 30
-#define BG_INDEX 40
+#define BRILLO 8
+
+#define GRISES 24
 
 // http://man7.org/linux/man-pages/man4/console_codes.4.html
 void borrar_pantalla() {
@@ -23,15 +24,25 @@ void posicion(int fila, int col) {
 }
 
 void color(int col) {
-	printf("\033[%dm",col+FG_INDEX);
+	printf("\033[38;5;%dm",col);
 }
 
 void color_fondo(int col) {
-	printf("\033[%dm",col+BG_INDEX);
+	printf("\033[48;5;%dm",col);
 }
 
-void colorrva(int r, int g, int b) {
-    printf("\033[38;2;255;255;1m");
+int rva(double rojo, double verde, double azul) {
+	return 1;
+}
+int gris(double tono) {
+	int col = (int) (tono * (GRISES+2));
+	if(col == 0) {
+		return 0;
+	} else if(col == GRISES+1) {
+		return 255-GRISES;
+	} else {
+		return (col) + (255-GRISES);
+	}
 }
 
 int max_filas() {
