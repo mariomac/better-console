@@ -1,7 +1,9 @@
 Better Console
 ==============
 
-This simple library (in Spanish language) has done for my first-year students at (Technical University of Catalonia)[http://www.upc.cat]. It adds to the Linux and Mac console the next functionalities:
+![](cons.png)
+
+This simple library (in Spanish language) has done for my first-year students at [Technical University of Catalonia](http://www.upc.cat). It adds to the Linux and Mac console the next functionalities:
 
 * Specify foreground and background color for the printed text
 * Clear screen

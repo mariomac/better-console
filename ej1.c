@@ -8,6 +8,7 @@ void main() {
 	color(MAGENTA); printf("Magenta\n");
 	color(CIAN); printf("Cian\n");
 	color(BLANCO); printf("Blanco\n");
-	color(ROJO); color_fondo(CIAN); printf("Rojo sobre cian\n");
+	color(ROJO); color_fondo(CIAN); printf("Rojo sobre cian");
 	color_fondo(NEGRO); color(BLANCO);
+	printf("\n");
 }

@@ -32,27 +32,6 @@ void color_fondo(int col) {
 	printf("\033[48;5;%dm",col);
 }
 
-int rva(double rojo, double verde, double azul) {
-    int r = (int)(rojo * (TONOSRGB));
-    if(r >= TONOSRGB) r = TONOSRGB-1;
-    int g = (int)(verde * (TONOSRGB));
-    if(g >= TONOSRGB) g = TONOSRGB-1;
-    int b = (int)(azul * (TONOSRGB));
-    if(b >= TONOSRGB) b = TONOSRGB-1;
-	return 16 + b + g * TONOSRGB + r * TONOSRGB * TONOSRGB ;
-}
-int gris(double tono) {
-	int col = (int) (tono * (GRISES+2));
-    printf("%d",col);
-	if(col == 0) {
-		return 0;
-	} else if(col >= GRISES+1) {
-		return 255-GRISES;
-	} else {
-		return (col) + (255-GRISES);
-	}
-}
-
 int max_filas() {
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
@@ -63,4 +42,25 @@ int max_columnas() {
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
     return w.ws_col;
+}
+
+int rva(double rojo, double verde, double azul) {
+    int r = (int)(rojo * (TONOSRGB));
+    if(r >= TONOSRGB) r = TONOSRGB-1;
+    int g = (int)(verde * (TONOSRGB));
+    if(g >= TONOSRGB) g = TONOSRGB-1;
+    int b = (int)(azul * (TONOSRGB));
+    if(b >= TONOSRGB) b = TONOSRGB-1;
+    return 16 + b + g * TONOSRGB + r * TONOSRGB * TONOSRGB ;
+}
+int gris(double tono) {
+    int col = (int) (tono * (GRISES+2));
+    printf("%d",col);
+    if(col == 0) {
+        return 0;
+    } else if(col >= GRISES+1) {
+        return 255-GRISES;
+    } else {
+        return (col) + (255-GRISES);
+    }
 }
