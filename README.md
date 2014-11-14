@@ -10,6 +10,8 @@ It adds to the Linux and Mac console the next functionalities:
 * Clear screen
 * Specify coordinates in the screen to print to.
 * Retrieve console screen size (rows and columns)
+* Empty the keyboard buffer
+* Set console type echo on/off
 
 It includes some utilization examples.
 
