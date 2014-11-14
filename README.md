@@ -3,7 +3,8 @@ Better Console
 
 ![](cons.png)
 
-This simple library (in Spanish language) has done for my first-year students at [Technical University of Catalonia](http://www.upc.cat). It adds to the Linux and Mac console the next functionalities:
+This simple library has been done for my first-year students at [Universitat Politècnica de Catalunya](http://www.upc.cat).
+It adds to the Linux and Mac console the next functionalities:
 
 * Specify foreground and background color for the printed text
 * Clear screen
@@ -11,3 +12,7 @@ This simple library (in Spanish language) has done for my first-year students at
 * Retrieve console screen size (rows and columns)
 
 It includes some utilization examples.
+
+To compile the library as well as the examples:
+
+gcc betterconsole.c examples.c -o examples
