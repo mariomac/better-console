@@ -6,6 +6,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "betterconsole.h"
 
 void coloured_printf() {
@@ -94,15 +96,13 @@ void retrieving_window_size() {
     
     clear_screen();
     empty_keyboard_buffer();
+    echo_off();
+    cursor_off();
     
-    while (dw != 'X') {
+    while (get_key_pressed() != KEY_ESC) {
         r = get_max_rows();
         c = get_max_cols();
         if (ra != r || ca != c) {
-            //tdw = getchar();
-            if(tdw != EOF) {
-                dw = tdw;
-            }
             set_background(BLACK);
             clear_screen();
             set_foreground(BLUE);
@@ -125,13 +125,13 @@ void retrieving_window_size() {
             set_foreground(MAGENTA);
             set_background(BLACK);
             set_position(r / 2 - 2, c / 2 - 4);
-            printf("Try to");
+            printf("Try to resize");
             set_position(r / 2 - 1, c / 2 - 5);
-            printf("resize");
+            printf("this window");
             set_position(r / 2, c / 2 - 4);
-            printf("this");
+            printf("(Press ESC");
             set_position(r / 2 + 1, c / 2 - 6);
-            printf("Window");
+            printf("to exit)");
             set_foreground(GREEN);
             set_position(r - 1, 2);
             printf("Window Size: %d x %d\n", r, c);
@@ -139,6 +139,9 @@ void retrieving_window_size() {
         ra = r;
         ca = c;
     }
+    
+    echo_on();
+    cursor_on();
 
 }
 
@@ -175,8 +178,6 @@ void show_palette() {
                         ));
                 set_position(y, x);
                 printf(" ");
-
-
             }
         }
         scanf("%*c");
@@ -184,10 +185,92 @@ void show_palette() {
     echo_on();
 }
 
+#define GRAVITY 1.5
+#define BOUNCE_FORCE_CONSERVATION 0.9
+#define HIT_FORCE 8
+
+#define BALLSIZE 4
+
+void non_blocking_keyboard_access() {
+    cursor_off();
+    echo_off();
+    set_foreground(WHITE);
+    set_background(BLACK);
+    char ball[] = " XX "
+                  "XXXX"
+                  "XXXX"
+                  " XX ";
+    int ws = 10;
+    int key = 0;
+    int ww, wh;
+    double px = get_max_cols() / 2.0, py = get_max_rows() / 2.0 ;
+    double sx=0, sy=0;
+    int i,j;
+    int lastkey;
+    while(key != KEY_ESC) {
+        clear_screen();
+        set_position(1,1);
+        printf("Use arrow keys to hit the ball in any direction.\n");
+        printf("Press ESC to exit");
+        ww = get_max_cols();
+        wh = get_max_rows();
+        
+        set_background(WHITE);
+        for(i = 0 ; i < BALLSIZE * BALLSIZE ; i++) {
+            if(ball[i] == 'X') {
+                set_position(py+i/BALLSIZE, px+i%BALLSIZE);
+                printf(" ");
+            }
+        }
+        set_background(BLACK);
+        
+        px += sx;
+        sy += GRAVITY;
+        py += sy;
+        
+        if(px < 1) {
+            sx = -(sx * BOUNCE_FORCE_CONSERVATION);
+            px = 1;
+        } else if(px + BALLSIZE > ww) {
+            sx = -(sx * BOUNCE_FORCE_CONSERVATION);
+            px = ww - BALLSIZE;
+        }
+        if(py < 1) {
+            sy = -(sy * BOUNCE_FORCE_CONSERVATION);
+            sx *= BOUNCE_FORCE_CONSERVATION;
+            py = 1;
+        } else if(py + BALLSIZE > wh) {
+            sy = -(sy * BOUNCE_FORCE_CONSERVATION);
+            py = wh - BALLSIZE;
+            sx *= BOUNCE_FORCE_CONSERVATION;
+        }
+        
+        fflush(stdout);
+        usleep(100000);
+        key = get_key_pressed();
+        switch(key) {
+            case KEY_UP:
+                sy -= HIT_FORCE;
+                break;
+            case KEY_DOWN:
+                sy += HIT_FORCE;
+                break;
+            case KEY_LEFT:
+                sx -= HIT_FORCE;
+                break;
+            case KEY_RIGHT:
+                sx += HIT_FORCE;
+                break;
+        }
+    }
+    
+    cursor_on();
+    echo_on();
+}
+
 int main() {
-    char option = 0, press_intro;
-    
-    
+    char option = 0, press_intro;   
+        
     while(option != 'e' && option != 'E') {
         press_intro = 1;
         clear_screen();
@@ -201,6 +284,7 @@ int main() {
         printf("\t4 - Retrieving window size\n");
         printf("\t5 - Test console echo on/off\n");
         printf("\t6 - Show a complete color palette\n");
+        printf("\t7 - Non-blocking keyboard access\n");
         printf("\tE - Exit\n\n");
 
         printf("Select an option: ");
@@ -226,6 +310,10 @@ int main() {
             case '6':
                 show_palette();
                 break;
+            case '7':
+                non_blocking_keyboard_access();
+                break;
+
             case 'e':
             case 'E':
                 press_intro = 0;

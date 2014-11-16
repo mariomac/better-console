@@ -1,5 +1,6 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <termios.h>
 
 #include "betterconsole.h"
@@ -75,6 +76,36 @@ void echo_off() {
     cfg.c_lflag &= ~ICANON; /* disable buffered i/o */
     cfg.c_lflag &= ~ECHO;        /* unset echo mode */
     tcsetattr(0, TCSANOW, &cfg);              /* use these new terminal i/o settings now */       
+}
+
+int get_key_pressed() {
+    struct termios trm, oldterm;
+    
+    tcgetattr(STDIN_FILENO, &oldterm);
+    trm = oldterm;
+    
+    trm.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL); 
+    
+    trm.c_cc[VMIN] = 0;
+    trm.c_cc[VTIME] = 0;
+    
+    tcsetattr(STDIN_FILENO,TCSANOW, &trm);
+    
+    int keypressed = 0;
+    
+    read(STDIN_FILENO,&keypressed,4);       
+    
+    tcsetattr(STDIN_FILENO,TCSANOW, &oldterm);    
+    
+    return keypressed;
+}
+
+void cursor_off() {
+    printf("\033[?25l");
+}
+
+void cursor_on() {
+    printf("\033[?25h");
 }
 
 #undef GRAYS
