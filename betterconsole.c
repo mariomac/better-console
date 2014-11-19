@@ -92,8 +92,13 @@ int get_key_pressed() {
     tcsetattr(STDIN_FILENO,TCSANOW, &trm);
     
     int keypressed = 0;
+    int cursor = 0;
     
-    read(STDIN_FILENO,&keypressed,4);       
+    read(STDIN_FILENO,&keypressed,1);
+    if(keypressed == KEY_ESC) {
+        read(STDIN_FILENO,&cursor,2);
+        keypressed |= cursor<<8;
+    }
     
     tcsetattr(STDIN_FILENO,TCSANOW, &oldterm);    
     
