@@ -48,7 +48,6 @@ int rgb(double red, double green, double blue) {
 }
 int gray(double bright) {
     int col = (int) (bright * (GRAYS+2));
-    printf("%d",col);
     if(col == 0) {
         return 0;
     } else if(col >= GRAYS+1) {
