@@ -22,3 +22,6 @@ It includes some utilization examples.
 To compile the library as well as the examples:
 
 gcc betterconsole.c examples.c -o examples
+
+
+Si te gustan mis aportaciones a github, quizás te gustará mi libro [Del bit a la Nube](http://www.xaas.guru/del-bit-a-la-nube/)
